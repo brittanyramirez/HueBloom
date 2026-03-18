@@ -1,0 +1,383 @@
+.signin-page {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #fffaf9, #fff6f7, #fdf7f4);
+  padding: 50px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* SIGN IN LAYOUT */
+/* this creates the main two-column structure for the sign in page */
+.signin-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 38px;
+  flex-wrap: wrap;
+}
+
+/* LEFT PANEL */
+/* this side holds the welcoming message and branding content */
+.signin-info-panel {
+  flex: 1 1 540px;
+  min-width: 320px;
+  min-height: 700px;
+  background: linear-gradient(to bottom right, #fffdfb, #fff4f6);
+  border: 1px solid #efd9dd;
+  border-radius: 30px;
+  padding: 42px 36px;
+  box-shadow: 0 14px 28px rgba(232, 138, 154, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.signin-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #9bbf9a;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.signin-info-panel h1 {
+  font-size: 44px;
+  line-height: 1.2;
+  color: #3a3a3a;
+  margin: 0 0 18px 0;
+}
+
+.signin-info-panel h1 span {
+  color: #e88a9a;
+}
+
+.signin-description {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #6f6f6f;
+  margin-bottom: 28px;
+}
+
+.signin-info-card {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid #efd9dd;
+  border-radius: 22px;
+  padding: 22px;
+  margin-bottom: 28px;
+}
+
+.signin-info-card h3 {
+  font-size: 20px;
+  color: #3a3a3a;
+  margin: 0 0 10px 0;
+}
+
+.signin-info-card p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #6f6f6f;
+  margin: 0;
+}
+
+.signin-side-image {
+  width: 100%;
+  max-width: 220px;
+  align-self: center;
+  margin-top: 10px;
+}
+
+/* RIGHT PANEL */
+/* this side holds the sign in form card */
+.signin-form-panel {
+  flex: 1 1 540px;
+  min-width: 320px;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.signin-card {
+  width: 100%;
+  max-width: 540px;
+  min-height: 700px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid #efd9dd;
+  border-radius: 30px;
+  padding: 40px 34px;
+  box-shadow: 0 14px 28px rgba(232, 138, 154, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #9bbf9a;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.signin-card h2 {
+  font-size: 34px;
+  color: #3a3a3a;
+  margin: 0 0 12px 0;
+}
+
+.form-description {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #6f6f6f;
+  margin-bottom: 24px;
+}
+
+/* ROLE SELECTOR */
+/* these buttons allow users to choose which type of account they are signing into */
+.role-toggle {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 26px;
+  flex-wrap: wrap;
+}
+
+.role-btn {
+  flex: 1;
+  min-width: 150px;
+  background: #f7eeee;
+  border: 1px solid #e4d3d7;
+  color: #4b4b4b;
+  border-radius: 18px;
+  padding: 12px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.role-btn:hover {
+  border-color: #9bbf9a;
+  transform: translateY(-2px);
+}
+
+.active-role {
+  background: #6f9a73;
+  color: white;
+  border-color: #6f9a73;
+  box-shadow: 0 8px 16px rgba(111, 154, 115, 0.14);
+}
+
+/* FORM STYLING */
+/* these styles control the layout and appearance of the form fields */
+.signin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #3a3a3a;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #dfd4d7;
+  border-radius: 16px;
+  font-size: 15px;
+  color: #3a3a3a;
+  background: #fffdfd;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #9bbf9a;
+  box-shadow: 0 0 0 4px rgba(155, 191, 154, 0.12);
+}
+
+/* PASSWORD FIELD WRAPPER */
+/* this keeps the password input and the toggle button aligned in the same container */
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  padding-right: 78px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 14px;
+  background: none;
+  border: none;
+  color: #6f9a73;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* CUSTOM ERROR TEXT */
+/* this shows validation messages below the input fields in a custom styled way */
+.error-text {
+  margin: 2px 0 0 2px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #c65f6d;
+}
+
+/* SUPPORT TEXT */
+/* this replaces the forgot password area with simple helpful guidance */
+.helper-row {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: -4px;
+}
+
+.helper-text {
+  font-size: 14px;
+  color: #6f6f6f;
+  margin: 0;
+}
+
+/* SUBMIT BUTTON */
+/* this is the main sign in button and includes the app's animated button style */
+.signin-submit-btn {
+  position: relative;
+  background: #6f9a73;
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 28px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 1;
+  margin-top: 6px;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.4s ease;
+}
+
+.signin-submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(111, 154, 115, 0.18);
+}
+
+.signin-submit-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #4f7a5c;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: -1;
+}
+
+.signin-submit-btn:hover::before {
+  transform: scaleX(1);
+}
+
+.signin-submit-btn::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 28px;
+  background: radial-gradient(
+    circle,
+    rgba(155, 191, 154, 0.4) 0%,
+    rgba(155, 191, 154, 0.15) 40%,
+    rgba(155, 191, 154, 0) 70%
+  );
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  z-index: -2;
+}
+
+.signin-submit-btn:hover::after {
+  opacity: 1;
+}
+
+/* SIGN UP LINK */
+/* this gives users an alternate path if they do not already have an account */
+.signup-text {
+  text-align: center;
+  font-size: 15px;
+  color: #6f6f6f;
+  margin-top: 24px;
+}
+
+.signup-link {
+  color: #6f9a73;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.signup-link:hover {
+  color: #4f7a5c;
+}
+
+/* RESPONSIVE DESIGN */
+/* these rules help the page adjust cleanly on tablets and mobile screens */
+@media (max-width: 992px) {
+  .signin-info-panel h1 {
+    font-size: 38px;
+  }
+
+  .signin-card h2 {
+    font-size: 30px;
+  }
+
+  .signin-info-panel,
+  .signin-card {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .signin-page {
+    padding: 30px 18px;
+  }
+
+  .signin-wrapper {
+    gap: 22px;
+  }
+
+  .signin-info-panel,
+  .signin-card {
+    padding: 30px 22px;
+  }
+
+  .signin-info-panel h1 {
+    font-size: 32px;
+  }
+
+  .signin-description,
+  .form-description,
+  .signin-info-card p {
+    font-size: 15px;
+  }
+
+  .role-toggle {
+    flex-direction: column;
+  }
+
+  .role-btn {
+    width: 100%;
+  }
+}
