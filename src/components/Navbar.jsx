@@ -61,7 +61,7 @@ export default function Navbar({ isLoggedIn }) {
             </Link>
 
             <Link to="/signup" className="signup-btn">
-              Get Started
+              Sign Up
             </Link>
           </div>
         ) : (

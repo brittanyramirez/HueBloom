@@ -29,15 +29,7 @@ export default function Home() {
             and a visual journey that feels personal, soft, and encouraging.
           </p>
 
-          <div className="hero-buttons">
-            <Link to="/signup" className="hero-primary-btn">
-              Get Started
-            </Link>
-
-            <Link to="/login" className="hero-secondary-btn">
-              Sign In
-            </Link>
-          </div>
+        
         </div>
 
         <div className="hero-image-wrapper">
@@ -158,11 +150,11 @@ export default function Home() {
 
           <div className="cta-buttons">
             <Link to="/signup" className="hero-primary-btn">
-              Create Account
+              Sign In
             </Link>
 
             <Link to="/login" className="hero-secondary-btn">
-              Log In
+              Sign Up
             </Link>
           </div>
         </div>
