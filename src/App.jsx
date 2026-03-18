@@ -7,6 +7,11 @@ import EmotionGarden from "./pages/EmotionGarden";
 import MoodHistory from "./pages/MoodHistory";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import HowItWorks from "./pages/HowItWorks";
+
+
+
+
 
 function App() {
 
@@ -26,6 +31,7 @@ function App() {
         <Route path="/history" element={<MoodHistory />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
       </Routes>
 
       <Footer />

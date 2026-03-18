@@ -77,38 +77,90 @@
 
 /* SIGN IN BUTTON */
 .login-btn {
+  position: relative;
   background: #6f9a73;
   color: white;
   padding: 10px 18px;
   border-radius: 24px;
   text-decoration: none;
   font-weight: 600;
-  transition: transform 0.45s ease, background-color 0.3s ease,
-    box-shadow 0.3s ease;
+  overflow: hidden;
+  z-index: 1;
+
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.4s ease;
 }
 
 /* GET STARTED BUTTON */
 .signup-btn {
-  background: #9bbf9a;
+  position: relative;
+  background: #6f9a73;
   color: white;
   padding: 10px 18px;
   border-radius: 24px;
   text-decoration: none;
   font-weight: 600;
-  transition: transform 0.45s ease, background-color 0.3s ease,
-    box-shadow 0.3s ease;
+  overflow: hidden;
+  z-index: 1;
+
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.4s ease;
 }
 
 /* BUTTON HOVER EFFECT */
 /* this gives the buttons that slight sliding motion you asked for */
 .login-btn:hover,
 .signup-btn:hover {
-  transform: translateX(6px);
-  box-shadow: 0 6px 14px rgba(111, 154, 115, 0.18);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(111, 154, 115, 0.18);
+}
+
+/* overlay animation */
+.login-btn::before,
+.signup-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #4f7a5c;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: -1;
+}
+
+.login-btn:hover::before,
+.signup-btn:hover::before {
+  transform: scaleX(1);
+}
+
+/* glow effect */
+.login-btn::after,
+.signup-btn::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 24px;
+  background: radial-gradient(
+    circle,
+    rgba(155, 191, 154, 0.4) 0%,
+    rgba(155, 191, 154, 0.15) 40%,
+    rgba(155, 191, 154, 0) 70%
+  );
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  z-index: -2;
+}
+
+.login-btn:hover::after,
+.signup-btn:hover::after {
+  opacity: 1;
 }
 
 /* LOGGED IN LOGOUT BUTTON */
 .logout-btn {
+  position: relative;
   background: #6f9a73;
   color: white;
   padding: 10px 18px;
@@ -116,13 +168,52 @@
   border-radius: 24px;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.45s ease, background-color 0.3s ease,
-    box-shadow 0.3s ease;
+  overflow: hidden;
+  z-index: 1;
+
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.4s ease;
 }
 
 .logout-btn:hover {
-  transform: translateX(6px);
-  box-shadow: 0 6px 14px rgba(111, 154, 115, 0.18);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(111, 154, 115, 0.18);
+}
+
+.logout-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #4f7a5c;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: -1;
+}
+
+.logout-btn:hover::before {
+  transform: scaleX(1);
+}
+
+.logout-btn::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 24px;
+  background: radial-gradient(
+    circle,
+    rgba(155, 191, 154, 0.4) 0%,
+    rgba(155, 191, 154, 0.15) 40%,
+    rgba(155, 191, 154, 0) 70%
+  );
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  z-index: -2;
+}
+
+.logout-btn:hover::after {
+  opacity: 1;
 }
 
 /* HAMBURGER BUTTON */
