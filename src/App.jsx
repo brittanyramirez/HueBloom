@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar"; 
-
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import MoodGenerator from "./pages/MoodGenerator";
 import EmotionGarden from "./pages/EmotionGarden";
@@ -27,6 +27,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
+
+      <Footer />
 
     </BrowserRouter>
   );
