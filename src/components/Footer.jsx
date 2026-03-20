@@ -31,7 +31,7 @@ export default function Footer() {
 
           <Link to="/">Home</Link>
           <Link to="/how-it-works">How It Works</Link>
-          <Link to="/generate">Contact</Link>
+          <Link to="/##">Contact</Link>
 
         </div>
 
