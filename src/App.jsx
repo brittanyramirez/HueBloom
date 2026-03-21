@@ -8,7 +8,7 @@ import MoodHistory from "./pages/MoodHistory";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import HowItWorks from "./pages/HowItWorks";
-
+import Dashboard from "./pages/Dashboard";
 
 
 
@@ -32,6 +32,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
 
       <Footer />
