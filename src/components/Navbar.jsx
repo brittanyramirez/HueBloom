@@ -15,6 +15,7 @@ export default function Navbar({ isLoggedIn }) {
 
   // links AFTER login
   const privateLinks = [
+    { name: "Dashboard", path: "/dashboard" },
     { name: "Mood Generator", path: "/generate" },
     { name: "Emotion Garden", path: "/garden" },
     { name: "Mood History", path: "/history" },
@@ -22,6 +23,16 @@ export default function Navbar({ isLoggedIn }) {
 
   // decide which links to show depending on login state
   const navLinks = isLoggedIn ? privateLinks : publicLinks;
+
+  // this function will handle logout later when backend is connected
+  const handleLogout = () => {
+    // LOGOUT LOGIC WILL GO HERE LATER
+
+    console.log("User logged out");
+
+    // close mobile menu if open
+    setMenuOpen(false);
+  };
 
   return (
     <header className="navbar">
@@ -65,7 +76,9 @@ export default function Navbar({ isLoggedIn }) {
             </Link>
           </div>
         ) : (
-          <button className="logout-btn">Logout</button>
+          <button className="logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
         )}
       </div>
 
@@ -122,7 +135,9 @@ export default function Navbar({ isLoggedIn }) {
             </Link>
           </div>
         ) : (
-          <button className="logout-btn">Logout</button>
+          <button className="logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
         )}
       </div>
     </header>
