@@ -11,7 +11,7 @@ import HowItWorks from "./pages/HowItWorks";
 import Dashboard from "./pages/Dashboard";
 import SupportPartnerDashboard from "./pages/Sp-dashboard";
 import PartnerUpdates from "./pages/PartnerUpdates";
-
+import PartnerSupport from "./pages/PartnerSupport";
 
 
 
@@ -38,6 +38,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/partner-dashboard" element={<SupportPartnerDashboard />} />
         <Route path="/partner-updates" element={<PartnerUpdates />} />
+        <Route path="/partner-support" element={<PartnerSupport />} />
       </Routes>
 
       <Footer />
