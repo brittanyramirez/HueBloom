@@ -10,6 +10,9 @@ import Signup from "./pages/Signup";
 import HowItWorks from "./pages/HowItWorks";
 import Dashboard from "./pages/Dashboard";
 import SupportPartnerDashboard from "./pages/Sp-dashboard";
+import PartnerUpdates from "./pages/PartnerUpdates";
+
+
 
 
 
@@ -34,6 +37,7 @@ function App() {
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/partner-dashboard" element={<SupportPartnerDashboard />} />
+        <Route path="/partner-updates" element={<PartnerUpdates />} />
       </Routes>
 
       <Footer />
