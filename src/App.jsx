@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar"; 
+import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import MoodGenerator from "./pages/MoodGenerator";
@@ -14,18 +14,16 @@ import PartnerUpdates from "./pages/PartnerUpdates";
 import PartnerSupport from "./pages/PartnerSupport";
 
 
-
-
 function App() {
-
   // temporary login state (later this will come from authentication)
   const isLoggedIn = true;
 
+  // temporary user role for testing
+  const userRole = "user";
+
   return (
     <BrowserRouter>
-
-      {/* Navbar sits ABOVE the routes so it appears on every page */}
-      <Navbar isLoggedIn={isLoggedIn} />
+      <Navbar isLoggedIn={isLoggedIn} userRole={userRole} />
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -42,7 +40,6 @@ function App() {
       </Routes>
 
       <Footer />
-
     </BrowserRouter>
   );
 }

@@ -3,7 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 import "../styles/Navbar.css";
 import logo from "../assets/logo.png"; // your brain logo
 
-export default function Navbar({ isLoggedIn }) {
+export default function Navbar({ isLoggedIn, userRole }) {
   // state to control if mobile menu is open or closed
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -21,8 +21,20 @@ export default function Navbar({ isLoggedIn }) {
     { name: "Mood History", path: "/history" },
   ];
 
+  // links for SUPPORT PARTNER after login
+  const partnerLinks = [
+    { name: "Dashboard", path: "/partner-dashboard" },
+    { name: "Shared Updates", path: "/partner-updates" },
+    { name: "Send Support", path: "/partner-support" },
+    { name: "Growth", path: "/partner-growth" },
+  ];
+
   // decide which links to show depending on login state
-  const navLinks = isLoggedIn ? privateLinks : publicLinks;
+  const navLinks = !isLoggedIn
+    ? publicLinks
+    : userRole === "partner"
+    ? partnerLinks
+    : privateLinks;
 
   // this function will handle logout later when backend is connected
   const handleLogout = () => {
