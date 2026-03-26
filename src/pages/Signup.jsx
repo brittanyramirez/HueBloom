@@ -1,52 +1,66 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Signup.css";
 import tulips from "../assets/tulips.png";
 
 export default function Signup() {
-    //this state stores the currntly selected user role
-    const [selectedRole, setSelectedRole] = useState("user");
+  //this state stores the currntly selected user role
+  const [selectedRole, setSelectedRole] = useState("user");
 
-    //this state controls whether the password will be visible
-    const [showPassword, setShowPassword] = useState(false);
+  //this state controls whether the password will be visible
+  const [showPassword, setShowPassword] = useState(false);
 
-    //this state controls whether the conforim pass is visible
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  //this state controls whether the conforim pass is visible
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    //storing the users form input values
-    const [formData, setFormData] = useState({
-        fullName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
+  //storing the users form input values
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    supportPartnerEmail: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  // stores the error message
+  const [errors, setErrors] = useState({});
+
+  //updates the form fields as user types
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormData({
+      ...formData,
+      [name]: value,
     });
 
-    // stores the error message 
-    const [errors, setErrors] = useState({});
+    //remove the old error when user typing
+    setErrors({
+      ...errors,
+      [name]: "",
+    });
+  };
 
-    //updates the form fields as user types
-    const handleChange = (event) => {
-        const { name, value} = event.target;
+  const validateForm = () => {
+    const newErrors = {};
 
-        setFormData({
-            ...formData,[name]: value,
-        });
-        //remove the old error when user typing
-        setErrors({
-            ...errors, [name]: "",
-        });
-    };
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = "Please enter your full name.";
+    }
 
-    const validateForm = () => {
-        const newErrors = {};
-
-        if (!formData.fullName.trim()) {
-            newErrors.fullName = "Please enter your full name.";
-        }
-        if (!formData.email.trim()) {
-            newErrors.email = "Please enter your email address.";} 
-        else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    if (!formData.email.trim()) {
+      newErrors.email = "Please enter your email address.";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address.";
+    }
+
+    if (
+      selectedRole === "user" &&
+      formData.supportPartnerEmail.trim() &&
+      !/\S+@\S+\.\S+/.test(formData.supportPartnerEmail)
+    ) {
+      newErrors.supportPartnerEmail =
+        "Please enter a valid support partner email address.";
     }
 
     if (!formData.password.trim()) {
@@ -64,7 +78,7 @@ export default function Signup() {
     return newErrors;
   };
 
-  {/*this function handles form submission */}
+  //this function handles form submission
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -74,17 +88,17 @@ export default function Signup() {
       setErrors(validationErrors);
       return;
     }
-    
+
     // sign up logic will go here later!!!!!!!!
     console.log("Sign up form submitted:", {
-        role: selectedRole,
-        ...formData,
+      role: selectedRole,
+      ...formData,
     });
-};
+  };
 
-return (
+  return (
     <main className="signup-page">
-        {/* SIGN UP LAYOUT */}
+      {/* SIGN UP LAYOUT */}
       <section className="signup-wrapper">
         <div className="signup-info-panel">
           <div>
@@ -111,7 +125,8 @@ return (
               </p>
             </div>
           </div>
-<img
+
+          <img
             src={tulips}
             alt="Tulip illustration"
             className="signup-side-image"
@@ -149,9 +164,19 @@ return (
                     ? "role-btn active-role"
                     : "role-btn"
                 }
-                onClick={() => setSelectedRole("partner")}
+                onClick={() => {
+                  setSelectedRole("partner");
+                  setFormData({
+                    ...formData,
+                    supportPartnerEmail: "",
+                  });
+                  setErrors({
+                    ...errors,
+                    supportPartnerEmail: "",
+                  });
+                }}
               >
-Support Partner
+                Support Partner
               </button>
             </div>
 
@@ -184,9 +209,33 @@ Support Partner
                   value={formData.email}
                   onChange={handleChange}
                 />
-             {/* CUSTOM EMAIL ERROR */}
+
+                {/* CUSTOM EMAIL ERROR */}
                 {errors.email && <p className="error-text">{errors.email}</p>}
               </div>
+
+              {/* SUPPORT PARTNER EMAIL FIELD */}
+              {selectedRole === "user" && (
+                <div className="form-group">
+                  <label htmlFor="supportPartnerEmail">
+                    Support Partner Email{" "}
+                    <span className="optional-text">(Optional)</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="supportPartnerEmail"
+                    name="supportPartnerEmail"
+                    placeholder="Enter a support partner email"
+                    value={formData.supportPartnerEmail}
+                    onChange={handleChange}
+                  />
+
+                  {/* CUSTOM SUPPORT PARTNER EMAIL ERROR */}
+                  {errors.supportPartnerEmail && (
+                    <p className="error-text">{errors.supportPartnerEmail}</p>
+                  )}
+                </div>
+              )}
 
               <div className="form-group">
                 <label htmlFor="password">Create Password</label>
@@ -216,6 +265,7 @@ Support Partner
                   <p className="error-text">{errors.password}</p>
                 )}
               </div>
+
               <div className="form-group">
                 <label htmlFor="confirmPassword">Confirm Password</label>
 
@@ -246,6 +296,7 @@ Support Partner
                   <p className="error-text">{errors.confirmPassword}</p>
                 )}
               </div>
+
               {/* SUPPORT TEXT */}
               <div className="helper-row">
                 <p className="helper-text">
@@ -270,5 +321,5 @@ Support Partner
         </div>
       </section>
     </main>
-    );
+  );
 }

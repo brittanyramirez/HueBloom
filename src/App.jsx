@@ -16,7 +16,7 @@ import PartnerSupport from "./pages/PartnerSupport";
 
 function App() {
   // temporary login state (later this will come from authentication)
-  const isLoggedIn = true;
+  const isLoggedIn = false;
 
   // temporary user role for testing
   const userRole = "user";
