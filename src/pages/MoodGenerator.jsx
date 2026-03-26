@@ -8,6 +8,12 @@ export default function MoodGenerator() {
   // this state controls whether results should show
   const [showResult, setShowResult] = useState(false);
 
+  // controls whether the user wants to share the entry
+  const [shareWithPartner, setShareWithPartner] = useState(false);
+
+  // controls if the entry was saved (for UI feedback)
+  const [saved, setSaved] = useState(false);
+
   // this function handles form submission
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -17,6 +23,7 @@ export default function MoodGenerator() {
     // this is where AI/backend logic will go later
     // for now, we just put result
     setShowResult(true);
+    setSaved(false);
   };
 
   // this allows users to quickly select a mood instead of typing
@@ -27,7 +34,7 @@ export default function MoodGenerator() {
   return (
     <main className="mood-page">
       {/* PAGE HEADER */}
-      {/* this introduces the page and guides the user */}
+
       <section className="mood-header">
         <p className="section-label">Mood Generator</p>
         <h1>How are you feeling today?</h1>
@@ -38,15 +45,15 @@ export default function MoodGenerator() {
       </section>
 
       {/* INPUT SECTION */}
-      {/* this is where the user enters their emotions */}
+      
       <section className="mood-input-section">
         <form className="mood-card" onSubmit={handleSubmit}>
           <textarea
             placeholder="Describe how you're feeling..."
             value={inputText}
-            onChange={(e) => setInputText(e.target.value)}/>
+            onChange={(e) => setInputText(e.target.value)}
+          />
 
-          {/* these are quick options users can click */}
           <div className="mood-chips">
             {["Happy", "Anxious", "Overwhelmed", "Calm", "Tired"].map(
               (mood) => (
@@ -92,10 +99,50 @@ export default function MoodGenerator() {
               to solve everything today, just noticing is a meaningful step.
             </p>
 
-            {/* SAVE BUTTON */}
-            <button className="save-btn">
-              Save Entry
-            </button>
+            {/* SAVE SECTION */}
+            {/* this groups the share option and save button together after the reflection is generated */}
+            <div className="save-section">
+              {/* SHARE OPTION */}
+              {/* this checkbox lets the user decide if this entry should be shared */}
+              <div className="share-option">
+                <label className="share-label">
+                  <input
+                    type="checkbox"
+                    checked={shareWithPartner}
+                    onChange={() => setShareWithPartner(!shareWithPartner)}
+                  />
+                  Share this entry with my support partner
+                </label>
+              </div>
+
+              {/* SAVE BUTTON */}
+              {/* this button will later save the entry to the database */}
+              <button
+                type="button"
+                className="save-entry-btn"
+                onClick={() => {
+                  // SAVE ENTRY LOGIC WILL GO HERE LATER
+
+                  console.log("Saving entry:", {
+                    inputText,
+                    shareWithPartner,
+                  });
+
+                  setSaved(true);
+                }}
+              >
+                Save Entry
+              </button>
+
+              {/* SUCCESS MESSAGE */}
+              {/* this gives user feedback after saving */}
+              {saved && (
+                <p className="save-success">
+                  Your entry has been saved
+                  {shareWithPartner && " and shared with your support partner"}.
+                </p>
+              )}
+            </div>
           </div>
         </section>
       )}
