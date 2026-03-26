@@ -81,6 +81,33 @@ export default function Dashboard() {
         </div>
       </section>
 
+      {/* SUPPORT MESSAGES SECTION */}
+      {/* this section shows encouragement messages the user has received from their support partner */}
+      <section className="dashboard-messages-section">
+        <div className="section-heading">
+          <p className="section-label">Support Messages</p>
+          <h2>Encouragement shared with you.</h2>
+        </div>
+
+        <div className="dashboard-messages-grid">
+          <article className="message-card">
+            <p className="message-label">From your support partner</p>
+            <p className="message-text">
+              I just wanted to remind you that you do not have to carry
+              everything at once. I’m here for you.
+            </p>
+          </article>
+
+          <article className="message-card">
+            <p className="message-label">From your support partner</p>
+            <p className="message-text">
+              Thinking of you today. No pressure to respond — I just wanted to
+              send a little encouragement your way.
+            </p>
+          </article>
+        </div>
+      </section>
+
       {/* SUPPORT SECTION */}
       <section className="dashboard-support-section">
         <div className="support-card">
