@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/Signup.css";
 import tulips from "../assets/tulips.png";
-
+const API_URL = import.meta.env.VITE_API_URL;
 export default function Signup() {
   //this state stores the currntly selected user role
   const [selectedRole, setSelectedRole] = useState("user");
@@ -24,6 +24,9 @@ export default function Signup() {
 
   // stores the error message
   const [errors, setErrors] = useState({});
+
+  // navigation after signup
+  const navigate = useNavigate();
 
   //updates the form fields as user types
   const handleChange = (event) => {
@@ -78,8 +81,8 @@ export default function Signup() {
     return newErrors;
   };
 
-  //this function handles form submission
-  const handleSubmit = (event) => {
+  //this function handles form submission and connects to backend
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const validationErrors = validateForm();
@@ -89,11 +92,44 @@ export default function Signup() {
       return;
     }
 
-    // sign up logic will go here later!!!!!!!!
-    console.log("Sign up form submitted:", {
-      role: selectedRole,
-      ...formData,
-    });
+    try {
+      const API_URL = import.meta.env.VITE_API_URL;
+
+const response = await fetch(`${API_URL}/api/auth/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: formData.fullName,
+          email: formData.email,
+          password: formData.password,
+          role: selectedRole,
+          supportPartnerEmail:
+            selectedRole === "user"
+              ? formData.supportPartnerEmail || null
+              : null,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setErrors({
+          general: data.message || "Signup failed",
+        });
+        return;
+      }
+
+      // redirect to login after successful signup
+      navigate("/login");
+    } catch (error) {
+      console.error("Signup request error:", error);
+
+      setErrors({
+        general: "Something went wrong. Please try again.",
+      });
+    }
   };
 
   return (
@@ -143,7 +179,6 @@ export default function Signup() {
             </p>
 
             {/* ROLE SELECTOR */}
-            {/* this lets the person choose whether they are signing up as the main user or support partner */}
             <div className="role-toggle">
               <button
                 type="button"
@@ -180,7 +215,6 @@ export default function Signup() {
               </button>
             </div>
 
-            {/* SIGN UP FORM */}
             <form className="signup-form" onSubmit={handleSubmit} noValidate>
               <div className="form-group">
                 <label htmlFor="fullName">Full Name</label>
@@ -192,8 +226,6 @@ export default function Signup() {
                   value={formData.fullName}
                   onChange={handleChange}
                 />
-
-                {/* CUSTOM FULL NAME ERROR */}
                 {errors.fullName && (
                   <p className="error-text">{errors.fullName}</p>
                 )}
@@ -209,12 +241,9 @@ export default function Signup() {
                   value={formData.email}
                   onChange={handleChange}
                 />
-
-                {/* CUSTOM EMAIL ERROR */}
                 {errors.email && <p className="error-text">{errors.email}</p>}
               </div>
 
-              {/* SUPPORT PARTNER EMAIL FIELD */}
               {selectedRole === "user" && (
                 <div className="form-group">
                   <label htmlFor="supportPartnerEmail">
@@ -229,18 +258,16 @@ export default function Signup() {
                     value={formData.supportPartnerEmail}
                     onChange={handleChange}
                   />
-
-                  {/* CUSTOM SUPPORT PARTNER EMAIL ERROR */}
                   {errors.supportPartnerEmail && (
-                    <p className="error-text">{errors.supportPartnerEmail}</p>
+                    <p className="error-text">
+                      {errors.supportPartnerEmail}
+                    </p>
                   )}
                 </div>
               )}
 
               <div className="form-group">
                 <label htmlFor="password">Create Password</label>
-
-                {/* PASSWORD FIELD WRAPPER */}
                 <div className="password-wrapper">
                   <input
                     type={showPassword ? "text" : "password"}
@@ -250,7 +277,6 @@ export default function Signup() {
                     value={formData.password}
                     onChange={handleChange}
                   />
-
                   <button
                     type="button"
                     className="password-toggle"
@@ -259,8 +285,6 @@ export default function Signup() {
                     {showPassword ? "Hide" : "Show"}
                   </button>
                 </div>
-
-                {/* CUSTOM PASSWORD ERROR */}
                 {errors.password && (
                   <p className="error-text">{errors.password}</p>
                 )}
@@ -268,8 +292,6 @@ export default function Signup() {
 
               <div className="form-group">
                 <label htmlFor="confirmPassword">Confirm Password</label>
-
-                {/* CONFIRM PASSWORD FIELD WRAPPER */}
                 <div className="password-wrapper">
                   <input
                     type={showConfirmPassword ? "text" : "password"}
@@ -279,7 +301,6 @@ export default function Signup() {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                   />
-
                   <button
                     type="button"
                     className="password-toggle"
@@ -290,27 +311,27 @@ export default function Signup() {
                     {showConfirmPassword ? "Hide" : "Show"}
                   </button>
                 </div>
-
-                {/* CUSTOM CONFIRM PASSWORD ERROR */}
                 {errors.confirmPassword && (
                   <p className="error-text">{errors.confirmPassword}</p>
                 )}
               </div>
 
-              {/* SUPPORT TEXT */}
               <div className="helper-row">
                 <p className="helper-text">
                   Your information will be used to create your HueBloom account.
                 </p>
               </div>
 
-              {/* SUBMIT BUTTON */}
+              {/* GENERAL ERROR */}
+              {errors.general && (
+                <p className="error-text">{errors.general}</p>
+              )}
+
               <button type="submit" className="signup-submit-btn">
                 Sign Up Now
               </button>
             </form>
 
-            {/* SIGN IN LINK */}
             <p className="signin-text">
               Already have an account?{" "}
               <Link to="/login" className="signin-link">

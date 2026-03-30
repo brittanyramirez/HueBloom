@@ -3,7 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 import "../styles/Navbar.css";
 import logo from "../assets/logo.png"; // your brain logo
 
-export default function Navbar({ isLoggedIn, userRole }) {
+export default function Navbar({ isLoggedIn, userRole, setUser }) {
   // state to control if mobile menu is open or closed
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -26,7 +26,6 @@ export default function Navbar({ isLoggedIn, userRole }) {
     { name: "Dashboard", path: "/partner-dashboard" },
     { name: "Shared Updates", path: "/partner-updates" },
     { name: "Send Support", path: "/partner-support" },
-    { name: "Growth", path: "/partner-growth" },
   ];
 
   // decide which links to show depending on login state
@@ -35,16 +34,15 @@ export default function Navbar({ isLoggedIn, userRole }) {
     : userRole === "partner"
     ? partnerLinks
     : privateLinks;
+//logout
+const handleLogout = () => {
+  localStorage.removeItem("huebloomUser");
 
-  // this function will handle logout later when backend is connected
-  const handleLogout = () => {
-    // LOGOUT LOGIC WILL GO HERE LATER
+  // update React state immediately
+  setUser(null);
 
-    console.log("User logged out");
-
-    // close mobile menu if open
-    setMenuOpen(false);
-  };
+  setMenuOpen(false);
+};
 
   return (
     <header className="navbar">
