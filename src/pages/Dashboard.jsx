@@ -1,7 +1,46 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import "../styles/Dashboard.css";
-
+const API_URL = import.meta.env.VITE_API_URL;
 export default function Dashboard() {
+  const [supportMessages, setSupportMessages] = useState([]);
+  const [messagesLoading, setMessagesLoading] = useState(true);
+  const [messagesError, setMessagesError] = useState("");
+
+  useEffect(() => {
+    const fetchSupportMessages = async () => {
+      try {
+        const savedUser = JSON.parse(localStorage.getItem("huebloomUser"));
+
+        if (!savedUser) {
+          setMessagesError("You must be logged in to view support messages.");
+          setMessagesLoading(false);
+          return;
+        }
+
+        const response = await
+          fetch(`${API_URL}/api/moods/support-messages/${savedUser.id}`);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          setMessagesError(data.message || "Failed to load support messages.");
+          setMessagesLoading(false);
+          return;
+        }
+
+        setSupportMessages(data);
+        setMessagesLoading(false);
+      } catch (error) {
+        console.error("Fetch support messages error:", error);
+        setMessagesError("Something went wrong while loading support messages.");
+        setMessagesLoading(false);
+      }
+    };
+
+    fetchSupportMessages();
+  }, []);
+
   return (
     <main className="dashboard-page">
       {/* DASHBOARD HERO */}
@@ -90,21 +129,30 @@ export default function Dashboard() {
         </div>
 
         <div className="dashboard-messages-grid">
-          <article className="message-card">
-            <p className="message-label">From your support partner</p>
-            <p className="message-text">
-              I just wanted to remind you that you do not have to carry
-              everything at once. I’m here for you.
-            </p>
-          </article>
+          {messagesLoading && (
+            <p className="dashboard-status-text">Loading support messages...</p>
+          )}
 
-          <article className="message-card">
-            <p className="message-label">From your support partner</p>
-            <p className="message-text">
-              Thinking of you today. No pressure to respond — I just wanted to
-              send a little encouragement your way.
+          {!messagesLoading && messagesError && (
+            <p className="dashboard-status-text dashboard-error-text">
+              {messagesError}
             </p>
-          </article>
+          )}
+
+          {!messagesLoading && !messagesError && supportMessages.length === 0 && (
+            <p className="dashboard-status-text">
+              No support messages yet.
+            </p>
+          )}
+
+          {!messagesLoading &&
+            !messagesError &&
+            supportMessages.map((message) => (
+              <article key={message.id} className="message-card">
+                <p className="message-label">From your support partner</p>
+                <p className="message-text">{message.message}</p>
+              </article>
+            ))}
         </div>
       </section>
 
@@ -118,34 +166,6 @@ export default function Dashboard() {
             is here to support reflection, not pressure. Every check in is a
             step toward greater self awareness.
           </p>
-        </div>
-      </section>
-
-      {/* RECENT ACTIVITY PREVIEW */}
-      <section className="dashboard-preview-section">
-        <div className="section-heading">
-          <p className="section-label">Recent Activity</p>
-          <h2>A preview of your reflections and progress.</h2>
-        </div>
-
-        <div className="preview-grid">
-          <article className="preview-card">
-            <h3>Last Check-In</h3>
-            <p className="preview-main-text">No entries yet</p>
-            <p className="preview-subtext">
-              Once you complete a mood check-in, your latest reflection can
-              appear here.
-            </p>
-          </article>
-
-          <article className="preview-card">
-            <h3>Garden Status</h3>
-            <p className="preview-main-text">Your garden is waiting to grow</p>
-            <p className="preview-subtext">
-              As you add entries, your emotion garden can begin to reflect your
-              wellness journey.
-            </p>
-          </article>
         </div>
       </section>
     </main>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../styles/PartnerSupport.css";
-
+const API_URL = import.meta.env.VITE_API_URL;
 export default function PartnerSupport() {
   // this state stores the message the support partner types
   const [message, setMessage] = useState("");
@@ -18,7 +18,7 @@ export default function PartnerSupport() {
   };
 
   // this function handles the form submission
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!message.trim()) {
@@ -26,24 +26,62 @@ export default function PartnerSupport() {
       return;
     }
 
-    // SEND SUPPORT LOGIC WILL GO HERE LATER
-    // 1. ??????send the message to the backend
-    // 2. save the selected support tone
-    // 3. associate the message with the connected user
-    // 4. show a success message after sending??????
+    try {
+      const savedUser = JSON.parse(localStorage.getItem("huebloomUser"));
 
-    console.log("Support message submitted:", {
-      tone: selectedTone,
-      message,
-    });
+      if (!savedUser) {
+        setError("You must be logged in.");
+        return;
+      }
 
-    setError("");
+      // first find which main user is connected to this support partner
+      const API_URL = import.meta.env.VITE_API_URL;
+
+const connectedUserResponse = await fetch(
+  `${API_URL}/api/moods/connected-user/${encodeURIComponent(savedUser.email)}`
+);
+
+      const connectedUserData = await connectedUserResponse.json();
+
+      if (!connectedUserResponse.ok) {
+        setError(
+          connectedUserData.message || "Failed to find connected user."
+        );
+        return;
+      }
+
+      const response = await fetch(`${API_URL}/api/moods/support`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          partnerId: savedUser.id,
+          userId: connectedUserData.id,
+          tone: selectedTone,
+          message,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Failed to send support message.");
+        return;
+      }
+
+      setMessage("");
+      setSelectedTone("gentle");
+      setError("");
+    } catch (error) {
+      console.error("Send support error:", error);
+      setError("Something went wrong while sending support.");
+    }
   };
 
   return (
     <main className="partner-support-page">
       {/* PAGE HEADER */}
-      {/* this introduces the page and explains the purpose of sending support */}
       <section className="partner-support-header">
         <p className="section-label">Send Support</p>
         <h1>Offer encouragement in a thoughtful and caring way.</h1>
@@ -126,7 +164,6 @@ export default function PartnerSupport() {
       </section>
 
       {/* MESSAGE IDEAS SECTION */}
-      {/* this section gives the support partner simple examples they can use or adapt */}
       <section className="message-ideas-section">
         <div className="section-heading">
           <p className="section-label">Message Ideas</p>
@@ -194,7 +231,6 @@ export default function PartnerSupport() {
       </section>
 
       {/* SUPPORT REMINDER SECTION */}
-      {/* this section reinforces the emotional tone and purpose of the support role */}
       <section className="partner-support-reminder-section">
         <div className="partner-support-reminder-card">
           <p className="section-label">Encourage With Care</p>

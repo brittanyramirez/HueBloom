@@ -103,6 +103,16 @@
 .sad-dot {
   background: #b7c7dc;
 }
+.garden-status-text {
+  text-align: center;
+  font-size: 16px;
+  color: #6f6f6f;
+  margin: 20px 0;
+}
+
+.garden-error-text {
+  color: #c65f6d;
+}
 
 /* GARDEN GRID */
 /* this creates the visual layout of the emotional blooms */
@@ -271,7 +281,6 @@
 }
 
 /* TONE VARIATIONS */
-/* these classes change the flower petal colors and visual behavior based on the emotional tone */
 .garden-bloom.calm .petal {
   background: #a9d2ad;
 }
@@ -360,7 +369,6 @@
 }
 
 /* PETAL DROOP */
-/* these mood states feel heavier, so the petals droop a little more */
 .garden-bloom.sad .petal-one,
 .garden-bloom.anxious .petal-one,
 .garden-bloom.overwhelmed .petal-one {
@@ -385,7 +393,6 @@
   transform: translateY(7px);
 }
 /* RAIN MESSAGE SECTION */
-/* this section reinforces the idea that difficult emotions are still valid and meaningful */
 .rain-message-section {
   max-width: 1200px;
   margin: 0 auto 70px auto;
@@ -415,7 +422,6 @@
   color: #6f6f6f;
 }
 /* SUPPORT SECTION */
-/* this adds a softer reflective message near the bottom of the page */
 .garden-support-section {
   max-width: 1200px;
   margin: 0 auto;
@@ -445,7 +451,6 @@
 }
 
 /* KEYFRAME ANIMATIONS */
-/* these animations give different emotional states their own motion behavior */
 @keyframes rainfall {
   0% {
     transform: translateY(0);

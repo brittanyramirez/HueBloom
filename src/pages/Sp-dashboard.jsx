@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "../styles/Sp-dashboard.css";
-
+const API_URL = import.meta.env.VITE_API_URL;
 export default function SupportPartnerDashboard() {
   return (
     <main className="partner-dashboard-page">
@@ -62,23 +62,6 @@ export default function SupportPartnerDashboard() {
               Send Encouragement
             </Link>
           </article>
-
-          <article className="partner-dashboard-card">
-            <div className="card-top-row">
-              <span className="card-tag">Connect</span>
-            </div>
-
-            <h3>Growth Check-In</h3>
-
-            <p>
-              See a simple overview of shared wellness progress and stay
-              connected to the journey over time.
-            </p>
-
-            <Link to="/partner-growth" className="partner-card-btn">
-              View Progress
-            </Link>
-          </article>
         </div>
       </section>
 
@@ -93,35 +76,6 @@ export default function SupportPartnerDashboard() {
             Small gestures, consistent encouragement, and thoughtful messages can
             have a meaningful impact over time.
           </p>
-        </div>
-      </section>
-
-      {/* SHARED PREVIEW SECTION */}
-      {/* this section previews what partner-facing updates might look like once data is connected later */}
-      <section className="partner-preview-section">
-        <div className="section-heading">
-          <p className="section-label">Shared Preview</p>
-          <h2>A look at what support updates can include.</h2>
-        </div>
-
-        <div className="partner-preview-grid">
-          <article className="partner-preview-card">
-            <h3>Most Recent Shared Mood</h3>
-            <p className="preview-main-text">No shared updates yet</p>
-            <p className="preview-subtext">
-              When shared updates become available, recent mood check-ins and
-              reflections can appear here.
-            </p>
-          </article>
-
-          <article className="partner-preview-card">
-            <h3>Encouragement Status</h3>
-            <p className="preview-main-text">No messages sent yet</p>
-            <p className="preview-subtext">
-              Support messages and small check-ins can later be tracked here as
-              part of the partner experience.
-            </p>
-          </article>
         </div>
       </section>
     </main>

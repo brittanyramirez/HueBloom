@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 import floral from "../assets/floral.png";
-
-export default function SignIn() {
+const API_URL = import.meta.env.VITE_API_URL;
+export default function SignIn({ setUser }) {
   // this state stores the currently selected user role
   const [selectedRole, setSelectedRole] = useState("user");
 
@@ -18,6 +18,9 @@ export default function SignIn() {
 
   // this state stores custom validation error messages
   const [errors, setErrors] = useState({});
+
+  // this lets us redirect after login
+  const navigate = useNavigate();
 
   // this function updates the form fields as the user types
   const handleChange = (event) => {
@@ -54,31 +57,66 @@ export default function SignIn() {
     return newErrors;
   };
 
-  // this handles form submission and only submits if the form is valid
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  // this handles form submission and connects to the backend login API
+  const handleSubmit = async (event) => {
+  event.preventDefault();
 
-    const validationErrors = validateForm();
+  const validationErrors = validateForm();
 
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/api/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: formData.email,
+        password: formData.password,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      setErrors({
+        general: data.message || "Login failed",
+      });
       return;
     }
 
-    // this is where sign in logic would go later !!!!!!!!!!!
-    console.log("Sign in form submitted:", {
-      role: selectedRole,
-      ...formData,
+    localStorage.setItem("huebloomUser", JSON.stringify(data.user));
+    setUser(data.user);
+
+    console.log("Logged in user:", data.user);
+    console.log("Role from backend:", data.user.role);
+
+    if (
+  data.user.role === "partner" ||
+  data.user.role === "support_partner"
+) {
+  navigate("/partner-dashboard");
+} else {
+  navigate("/dashboard");
+}
+  } catch (error) {
+    console.error("Login request error:", error);
+
+    setErrors({
+      general: "Something went wrong. Please try again.",
     });
-  };
+  }
+};
 
   return (
     <main className="signin-page">
       {/* SIGN IN LAYOUT */}
-      {/* this wraps the full page content into a left info panel and right form panel */}
       <section className="signin-wrapper">
         {/* LEFT PANEL */}
-        {/* this side gives context, branding, and a welcoming tone before the user signs in */}
         <div className="signin-info-panel">
           <div>
             <p className="signin-label">Welcome Back</p>
@@ -113,7 +151,6 @@ export default function SignIn() {
         </div>
 
         {/* RIGHT PANEL */}
-        {/* this is the main sign in card where the user selects a role and enters their login details */}
         <div className="signin-form-panel">
           <div className="signin-card">
             <p className="form-label">Sign In</p>
@@ -123,7 +160,6 @@ export default function SignIn() {
             </p>
 
             {/* ROLE SELECTOR */}
-            {/* this lets the person choose whether they are signing in as the main user or support partner */}
             <div className="role-toggle">
               <button
                 type="button"
@@ -151,7 +187,6 @@ export default function SignIn() {
             </div>
 
             {/* SIGN IN FORM */}
-            {/* these fields collect the user's login information */}
             <form className="signin-form" onSubmit={handleSubmit} noValidate>
               <div className="form-group">
                 <label htmlFor="email">Email Address</label>
@@ -165,7 +200,6 @@ export default function SignIn() {
                 />
 
                 {/* CUSTOM EMAIL ERROR */}
-                {/* this shows a custom error message below the email field instead of the browser default */}
                 {errors.email && <p className="error-text">{errors.email}</p>}
               </div>
 
@@ -173,7 +207,6 @@ export default function SignIn() {
                 <label htmlFor="password">Password</label>
 
                 {/* PASSWORD FIELD WRAPPER */}
-                {/* this wrapper allows the input field and show/hide button to sit in the same row */}
                 <div className="password-wrapper">
                   <input
                     type={showPassword ? "text" : "password"}
@@ -194,29 +227,30 @@ export default function SignIn() {
                 </div>
 
                 {/* CUSTOM PASSWORD ERROR */}
-                {/* this shows a custom error message below the password field instead of the browser default */}
                 {errors.password && (
                   <p className="error-text">{errors.password}</p>
                 )}
               </div>
 
               {/* SUPPORT TEXT */}
-              {/* this replaces the forgot password link with simple helpful text for now */}
               <div className="helper-row">
                 <p className="helper-text">
                   Use your email and password to access your account.
                 </p>
               </div>
 
+              {/* GENERAL ERROR MESSAGE */}
+              {errors.general && (
+                <p className="error-text">{errors.general}</p>
+              )}
+
               {/* SUBMIT BUTTON */}
-              {/* this button submits the sign in form */}
               <button type="submit" className="signin-submit-btn">
                 Sign In
               </button>
             </form>
 
             {/* SIGN UP LINK */}
-            {/* this helps users navigate to account creation if they do not already have an account */}
             <p className="signup-text">
               Don&apos;t have an account?{" "}
               <Link to="/signup" className="signup-link">

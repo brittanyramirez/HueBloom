@@ -42,6 +42,17 @@
   color: #6f6f6f;
   margin: 0;
 }
+.dashboard-status-text {
+  text-align: center;
+  font-size: 16px;
+  color: #6f6f6f;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.dashboard-error-text {
+  color: #c65f6d;
+}
 
 /* SECTION HEADINGS */
 .section-heading {
